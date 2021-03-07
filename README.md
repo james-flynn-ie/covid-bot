@@ -1,5 +1,6 @@
 # azure-covid-bot
-Azure Bot Service which provides COVID-19 symptoms and precautions based on the Irish health service's (HSE) advice.
+
+Azure COVID Bot provides information on COVID-19 symptoms and precautions based on the Irish health service's (HSE) advice. It is implemented using QnAMaker Natural Language Processing (NLP) Service and Azure Bot Framework v4.
 
 ## Warning
 
