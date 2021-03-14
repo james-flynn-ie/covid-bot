@@ -1,3 +1,5 @@
+# Copyright (c) James Flynn 2021.
+
 # Ignore SSL errors
 --trusted-host pypi.org
 --trusted-host files.pythonhosted.org

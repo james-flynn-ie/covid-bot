@@ -29,3 +29,5 @@ For more information on QnAMaker, please see: [https://docs.microsoft.com/en-us/
 The .TSV format contains the following header values:
 
 `Question	Answer	Source	Metadata	SuggestedQuestions	IsContextOnly	Prompts	QnaId`
+
+*Copyright (c) James Flynn 2021.*
