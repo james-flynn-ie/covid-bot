@@ -1,0 +1,7 @@
+# Ignore SSL errors
+--trusted-host pypi.org
+--trusted-host files.pythonhosted.org
+botbuilder-core
+asyncio
+aiohttp
+cookiecutter==1.7.0
