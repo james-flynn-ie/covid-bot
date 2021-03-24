@@ -13,6 +13,7 @@ from config import DefaultConfig
 class CovidBot(ActivityHandler):
     def __init__(self, config: DefaultConfig):
         self.qna_maker = QnAMaker(
+            # https://docs.microsoft.com/en-us/python/api/botbuilder-ai/botbuilder.ai.qna.qnamaker_endpoint.qnamakerendpoint?view=botbuilder-py-latest
             QnAMakerEndpoint(
                 knowledge_base_id=config.QNA_KNOWLEDGEBASE_ID,
                 endpoint_key=config.QNA_ENDPOINT_KEY,
@@ -20,6 +21,7 @@ class CovidBot(ActivityHandler):
             )
         )
 
+    # https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-howto-send-messages?view=azure-bot-service-4.0&tabs=python
     async def on_members_added_activity(
         self, members_added: [ChannelAccount], turn_context: TurnContext
     ):
@@ -33,6 +35,7 @@ class CovidBot(ActivityHandler):
                     "if you have any health concerns."
                 )
 
+    # https://docs.microsoft.com/en-us/azure/bot-service/bot-builder-primitive-prompts?view=azure-bot-service-4.0&tabs=python#create-property-accessors
     async def on_message_activity(self, turn_context: TurnContext):
         # The actual call to the QnA Maker service.
         response = await self.qna_maker.get_answers(turn_context)
