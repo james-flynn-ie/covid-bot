@@ -73,6 +73,6 @@ Azure Bot Framework refers to connections to user interface applications as 'Cha
 
 A number of handlers are provided by Azure to connect the bot with platforms such as FaceBook, Twitter, Microsoft Teams, Twillio (SMS) and many others.
 
-   For more information on connecting Covid-bot with any of these channels, please read: <https://docs.microsoft.com/en-us/azure/bot-service/bot-service-manage-channels?view=azure-bot-service-4.0>
+For more information on connecting Covid-bot with any of these channels, please read: <https://docs.microsoft.com/en-us/azure/bot-service/bot-service-manage-channels?view=azure-bot-service-4.0>
 
 *Copyright (c) James Flynn 2021.*
