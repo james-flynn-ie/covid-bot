@@ -15,6 +15,9 @@ class DefaultConfig:
     # Check that mandatory env vars are set, raise error if not set.
     MANDATORY_ENVIRONMENT_VARIABLES = ["MicrosoftAppId", "MicrosoftAppPassword", "QnAKnowledgebaseId", "QnAEndpointKey", "QnAEndpointHostName"]
 
+    # Use this list instead, if you experience 401 status code from Bot Emulator (See comment block below for more information).
+    #MANDATORY_ENVIRONMENT_VARIABLES = ["QnAKnowledgebaseId", "QnAEndpointKey", "QnAEndpointHostName"]
+
     for environmentVariable in MANDATORY_ENVIRONMENT_VARIABLES:
         if environmentVariable not in os.environ:
             raise EnvironmentError("Covid-Bot failed to start due to missing environment variable. Please set a value for \"{}\".".format(environmentVariable))
