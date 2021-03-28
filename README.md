@@ -74,10 +74,10 @@ For Covid-Bot to connect with the QnAMaker service, some environment variables n
    - name: `QnAKnowledgebaseId` , value: \<Knowledge Base Id\>
    - name: `QnAEndpointKey`, value: \<Endpoint Key\>
    - name: `QnAEndpointHostName`, value \<Endpoint Host Name\>
-   ![img](img\add-app-service-env-vars.PNG)
+   ![img](img/add-app-service-env-vars.PNG)
 
 7. Select Save, once all environment variables have been set.
-   ![img](img\save-app-service-env-vars.PNG)
+   ![img](img/save-app-service-env-vars.PNG)
 
 ### Deployment Steps
 
