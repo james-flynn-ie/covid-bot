@@ -7,10 +7,15 @@ from botbuilder.ai.qna import QnAMaker, QnAMakerEndpoint
 from botbuilder.core import ActivityHandler, MessageFactory, TurnContext
 from botbuilder.schema import ChannelAccount
 
+# Add parent directory to sys.path, so that the config module is found in the module search path.
+# Westra, E (2016) "Modular Programming with Python", Packt Publishing, retrieved on 28-March-2021:
+#     https://www.oreilly.com/library/view/modular-programming-with/9781785884481/ch07s03.html
 import os, sys
-currentdir = os.path.dirname(os.path.realpath(__file__))
-parentdir = os.path.dirname(currentdir)
-sys.path.insert(0, parentdir)
+currentDir = os.path.dirname(os.path.realpath(__file__))
+# os.path.dirname returns the path without the currentDir attached, (i.e.: the parent directory).
+#    Retrieved on 28-March-2021: https://appdividend.com/2021/01/22/python-os-path-dirname-function-with-example
+parentDir = os.path.dirname(currentDir)
+sys.path.insert(0, parentDir)
 
 import config
 
