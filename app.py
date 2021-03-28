@@ -18,7 +18,7 @@ from botbuilder.core import (
 from botbuilder.core.integration import aiohttp_error_middleware
 from botbuilder.schema import Activity, ActivityTypes
 
-from src.bot import CovidBot
+from bot import CovidBot
 from config import DefaultConfig
 
 CONFIG = DefaultConfig()

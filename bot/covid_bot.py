@@ -1,4 +1,4 @@
-# Adapted on 14-March-2021 from: https://github.com/microsoft/BotBuilder-Samples/tree/main/samples/python/11.qnamaker
+## Adapted on 14-March-2021 from: https://github.com/microsoft/BotBuilder-Samples/tree/main/samples/python/11.qnamaker
 
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT License.
@@ -7,11 +7,16 @@ from botbuilder.ai.qna import QnAMaker, QnAMakerEndpoint
 from botbuilder.core import ActivityHandler, MessageFactory, TurnContext
 from botbuilder.schema import ChannelAccount
 
-from config import DefaultConfig
+import os, sys
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.insert(0, parentdir)
+
+import config
 
 
 class CovidBot(ActivityHandler):
-    def __init__(self, config: DefaultConfig):
+    def __init__(self, config: config.DefaultConfig):
         self.qna_maker = QnAMaker(
             # https://docs.microsoft.com/en-us/python/api/botbuilder-ai/botbuilder.ai.qna.qnamaker_endpoint.qnamakerendpoint?view=botbuilder-py-latest
             QnAMakerEndpoint(
