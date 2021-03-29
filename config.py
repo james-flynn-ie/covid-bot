@@ -6,8 +6,6 @@
 
 import os
 
-""" Bot Configuration """
-
 
 class DefaultConfig:
     """ Bot Configuration """
