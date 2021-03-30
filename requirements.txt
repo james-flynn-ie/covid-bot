@@ -3,9 +3,12 @@
 # Ignore SSL errors
 --trusted-host pypi.org
 --trusted-host files.pythonhosted.org
-botbuilder-core
 asyncio
-aiohttp
+aiohttp==3.6.2
+botbuilder-core
+botbuilder-integration-aiohttp==4.11.0
+botbuilder-ai==4.11.0
 cookiecutter==1.7.0
-botbuilder-integration-aiohttp>=4.11.0
-botbuilder-ai>=4.11.0
+idna==2.9
+requests==2.23.0
+yarl==1.4.2
