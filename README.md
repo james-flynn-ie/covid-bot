@@ -10,6 +10,15 @@ Covid-Bot was created using QnAMaker Natural Language Processing (NLP) Service a
 
 The information provided by this chat bot is freely available on the Irish health service's website ([https://www2.hse.ie/coronavirus](https://www2.hse.ie/coronavirus/)) and was current at the time the bot was created (March, 2021). It is not a replacement for professional medical advice. **Please contact your Primary Care Physician or GP if you experience any symptoms!**
 
+## Running with Bot Framework Emulator on localhost
+
+Microsoft provides a tool for testing bot applications prior to deployment.
+
+For instructions on setup, please see:
+<https://docs.microsoft.com/en-us/azure/bot-service/bot-service-debug-emulator?view=azure-bot-service-4.0&tabs=python>
+
+If you experience a 401 HTTP status code when using the Emulator please see the comments on how to resolve it in [config.py](config.py).
+
 ## Configuring Auto-Deployment of Covid-bot to Azure Bot Service
 
 Azure Bot Service is capable of polling changes in your Bot's repository, providing a pipeline for automatically deploying changes from your main branch.
@@ -19,8 +28,26 @@ Azure Bot Service is capable of polling changes in your Bot's repository, provid
 - Azure Subscription.
 - Knowledge Base has been deployed on QnAMaker: [data/QnAMaker/README.md](data/QnAMaker/README.md)
 - Azure Bot Service has been created: <https://docs.microsoft.com/en-us/azure/bot-service/abs-quickstart?view=azure-bot-service-4.0>
+  - Ensure that the App Service which hosts the Bot is configured to run Python:
 
-### Pre-Deployment Steps: Set Covid-Bot environment variables
+### Deploying Covid-bot using ARM Templates
+
+Azure Resource Management (ARM) templates allow us to define our infrastructure as code within JSON files.
+
+Microsoft provides an ARM template for deploying Azure Bots: [/deployment/template-with-preexisting-rg.json](/deployment/template-with-preexisting-rg.json)
+
+To deploy the application, run the following steps:
+
+1. Login using the account linked with your Azure subscription: `az login`
+2. Set the subscription ID: `az account set --subscription <subscription_id>`
+3. Create an application registration within Azure. This integrates IAM with the app: `az ad app create --display-name "displayName" --password "AtLeastSixteenCharacters_0" --available-to-other-tenants`
+4. Deploy the Web App within the App Service: `az deployment group create --resource-group "<name-of-resource-group>" --template-file "<path-to-template-with-preexisting-rg.json>" --parameters appId="<app-id-from-previous-step>" appSecret="<password-from-previous-step>" botId="<id or bot-app-service-name>" newWebAppName="<bot-app-service-name>" existingAppServicePlan="<name-of-app-service-plan>" appServicePlanLocation="<region-location-name>" --name "<bot-app-service-name>"`
+5. Zip the repository using your favourite archiving tool. The file `app.py` must be at the root of the ZIP file.
+6. Deploy the ZIP using the following command: `az webapp deployment source config-zip --resource-group "<name-of-resource-group>" --name "<bot-app--name>" --src "path\to\file.zip"`
+
+Please note that this deployment differs from the service deployed using the Azure portal, as it provides a 'Bot Channels Registration' rather than the Web App. Functionally, I am yet to observe a difference between them.
+
+### Post-Deployment Steps: Set Covid-Bot environment variables
 
 For Covid-Bot to connect with the QnAMaker service, some environment variables need to be set within App Service See [src/config.py](src/config.py).
 
@@ -47,10 +74,10 @@ For Covid-Bot to connect with the QnAMaker service, some environment variables n
    - name: `QnAKnowledgebaseId` , value: \<Knowledge Base Id\>
    - name: `QnAEndpointKey`, value: \<Endpoint Key\>
    - name: `QnAEndpointHostName`, value \<Endpoint Host Name\>
-   ![img](img\add-app-service-env-vars.PNG)
+   ![img](img/add-app-service-env-vars.PNG)
 
 7. Select Save, once all environment variables have been set.
-   ![img](img\save-app-service-env-vars.PNG)
+   ![img](img/save-app-service-env-vars.PNG)
 
 ### Deployment Steps
 
