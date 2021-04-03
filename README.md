@@ -17,18 +17,15 @@ Microsoft provides a tool for testing bot applications prior to deployment.
 For instructions on setup, please see:
 <https://docs.microsoft.com/en-us/azure/bot-service/bot-service-debug-emulator?view=azure-bot-service-4.0&tabs=python>
 
-If you experience a 401 HTTP status code when using the Emulator please see the comments on how to resolve it in [config.py](config.py).
+If you experience a 401 HTTP status code when using the Emulator on your local PC, then please follow the comments on how to resolve it in [config.py](config.py).
 
-## Configuring Auto-Deployment of Covid-bot to Azure Bot Service
-
-Azure Bot Service is capable of polling changes in your Bot's repository, providing a pipeline for automatically deploying changes from your main branch.
+## Deploying Covid-Bot For The First Time
 
 ### Deployment Pre-Requirements
 
 - Azure Subscription.
+- Azure CLI installed on your local PC.
 - Knowledge Base has been deployed on QnAMaker: [data/QnAMaker/README.md](data/QnAMaker/README.md)
-- Azure Bot Service has been created: <https://docs.microsoft.com/en-us/azure/bot-service/abs-quickstart?view=azure-bot-service-4.0>
-  - Ensure that the App Service which hosts the Bot is configured to run Python:
 
 ### Deploying Covid-bot using ARM Templates
 
@@ -40,12 +37,12 @@ To deploy the application, run the following steps:
 
 1. Login using the account linked with your Azure subscription: `az login`
 2. Set the subscription ID: `az account set --subscription <subscription_id>`
-3. Create an application registration within Azure. This integrates IAM with the app: `az ad app create --display-name "displayName" --password "AtLeastSixteenCharacters_0" --available-to-other-tenants`
+3. Create an application registration within Azure. This integrates IAM with the app, and allows channels to be integrated with the bot service (e.g.: FaceBook Messenger, Teams, etc.): `az ad app create --display-name "displayName" --password "AtLeastSixteenCharacters_0" --available-to-other-tenants`
 4. Deploy the Web App within the App Service: `az deployment group create --resource-group "<name-of-resource-group>" --template-file "<path-to-template-with-preexisting-rg.json>" --parameters appId="<app-id-from-previous-step>" appSecret="<password-from-previous-step>" botId="<id or bot-app-service-name>" newWebAppName="<bot-app-service-name>" existingAppServicePlan="<name-of-app-service-plan>" appServicePlanLocation="<region-location-name>" --name "<bot-app-service-name>"`
 5. Zip the repository using your favourite archiving tool. The file `app.py` must be at the root of the ZIP file.
 6. Deploy the ZIP using the following command: `az webapp deployment source config-zip --resource-group "<name-of-resource-group>" --name "<bot-app--name>" --src "path\to\file.zip"`
 
-Please note that this deployment differs from the service deployed using the Azure portal, as it provides a 'Bot Channels Registration' rather than the Web App. Functionally, I am yet to observe a difference between them.
+Please note that the Python app deployment differs from the C# and JS Bot Services deployed using the Azure portal, as it creates a 'Bot Channels Registration' rather than the 'Bot Service' resource. Functionally, there were no observable differences apart from this different resource name.
 
 ### Post-Deployment Steps: Set Covid-Bot environment variables
 
@@ -74,25 +71,34 @@ For Covid-Bot to connect with the QnAMaker service, some environment variables n
    - name: `QnAKnowledgebaseId` , value: \<Knowledge Base Id\>
    - name: `QnAEndpointKey`, value: \<Endpoint Key\>
    - name: `QnAEndpointHostName`, value \<Endpoint Host Name\>
+
    ![img](img/add-app-service-env-vars.PNG)
 
-7. Select Save, once all environment variables have been set.
+7. Select Save, once all environment variables have been set. This will restart the App Service.
    ![img](img/save-app-service-env-vars.PNG)
+
+8. Once the environment variables are set and the App Service has been restarted, then open the 'Bot Channels Registration' and select 'Test in Web Chat' to verify that the Bot responds as expected.
+
+## Configuring Auto-Deployment of Covid-Bot Using Azure App Service Deployment Center
+
+Azure Bot Service is capable of polling changes in your Bot's repository, providing a pipeline for automatically deploying changes from your main branch.
 
 ### Deployment Steps
 
 1. Open the Azure Portal, and navigate to the Azure Bot Service.
 2. Select 'Deployment Center' from the left-hand menu.
 3. Select the Settings tab, and then select Source: GitHub.
-4. Change the provider to use 'App Service Build Service' (Kudu), to automatically deploy each commit to a specified branch.
-5. Authorize GitHub, using your GitHub account credentials.
+4. Retain the default provider of 'GitHub Actions'.
+5. Authorize GitHub, using your GitHub account credentials, if prompted to do so.
 6. Select the following values:
    - *Organization*: your GitHub account name.
    - *Repository*: The repo name where your Bot code is stored.
    - *Branch*: The branch from which the code will be deployed (typically 'main').
    ![img](/img/app-service-deployment-center-settings.PNG)
-7. Push a commit, or merge a PR, into the specified branch to see the app being deployed.
-8. Open the 'Logs' tab within Deployment Center to view the deployment history.
+7. Select 'Add a workflow', to automatically generate a workflow file.
+8. Select the Build runtime stack as 'Python 3.7'.
+9. Select 'Save'.
+10. A build should start automatically. Open the 'Logs' tab within Deployment Center to view the deployment history.
 
 ### Add Channels to Azure Bot Service
 
