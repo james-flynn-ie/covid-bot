@@ -4,6 +4,8 @@
 --trusted-host pypi.org
 --trusted-host files.pythonhosted.org
 asyncio
+# Older version of aiohttp required due to botbuilder modules dependencies.
+# GitHub Issue opened: https://github.com/microsoft/botbuilder-python/issues/1621
 aiohttp==3.6.2
 botbuilder-ai==4.12.0
 botframework-connector==4.12.0
