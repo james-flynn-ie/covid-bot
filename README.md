@@ -108,4 +108,6 @@ A number of handlers are provided by Azure to connect the bot with platforms suc
 
 For more information on connecting Covid-bot with any of these channels, please read: <https://docs.microsoft.com/en-us/azure/bot-service/bot-service-manage-channels?view=azure-bot-service-4.0>
 
+*The Coronavirus image used in the repository's social media card are available in the public domain from Center for Disease Control and Prevention's [Public Health Image Library](https://phil.cdc.gov//PHIL_Images/23312/23312.tif)*
+
 *Copyright (c) James Flynn 2021.*
