@@ -30,6 +30,6 @@ jobs:
     - name: 'Deploy to Azure Web App'
       uses: azure/webapps-deploy@v2
       with:
-        app-name: 'python-covid-bot'
+        app-name: 'python-covid-bot-app'
         slot-name: 'production'
         publish-profile: ${{ secrets.AzureAppService_PublishProfile_91ca8d7c8c104b3da2e9f3b74e2c05e7 }}
